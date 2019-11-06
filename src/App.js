@@ -19,8 +19,21 @@ export default class App extends Component {
         isCompleted: false
       }]
     }
-
-
+  }
+  onCompletedChange = (id) => {
+    // console.log('onCompletedChange');
+    // console.log(id);
+    this.setState((prevState) => {
+      console.log(prevState);
+      return {
+        todos: prevState.todos.map(todo => {
+          if (todo.id === id) {
+            todo.isCompleted = !todo.isCompleted
+          }
+          return todo
+        })
+      }
+    })
   }
 
   handleTodo = (title) => {
@@ -30,7 +43,6 @@ export default class App extends Component {
         id: Math.random(),
         title: title,
         isCompleted: false
-
       })
     })
   }
@@ -40,7 +52,7 @@ export default class App extends Component {
         <TodoHeader>
         </TodoHeader>
         <TodoInput todo={this.handleTodo} />
-        <TodoList todos={this.state.todos} />
+        <TodoList todos={this.state.todos} onCompletedChange={this.onCompletedChange} />
         <Like />
       </>
     )
